@@ -46,6 +46,26 @@ static int cmd_si(char *args) {
 	return 0;
 }
 
+static int cmd_info(char *args) {
+	if(args == NULL) {
+		return 0;
+	}
+	if(strcmp(args, "r") == 0) {
+		printf("eax\t0x%x\t%d\n", cpu.eax, cpu.eax);
+		printf("ecx\t0x%x\t%d\n", cpu.ecx, cpu.ecx);
+		printf("edx\t0x%x\t%d\n", cpu.edx, cpu.edx);
+		printf("ebx\t0x%x\t%d\n", cpu.ebx, cpu.ebx);
+		printf("esp\t0x%x\t%d\n", cpu.esp, cpu.esp);
+		printf("ebp\t0x%x\t%d\n", cpu.ebp, cpu.ebp);
+		printf("esi\t0x%x\t%d\n", cpu.esi, cpu.esi);
+		printf("edi\t0x%x\t%d\n", cpu.edi, cpu.edi);
+		printf("eip\t0x%x\n", cpu.eip);
+	} else if(strcmp(args, "w") == 0) {
+	}
+
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -57,6 +77,7 @@ static struct {
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Step one instruction exactly", cmd_si },
+	{ "info", "Print information of registers or watchpoints", cmd_info },
 
 	/* TODO: Add more commands */
 
