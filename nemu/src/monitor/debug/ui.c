@@ -66,6 +66,33 @@ static int cmd_info(char *args) {
 	return 0;
 }
 
+static int cmd_x(char *args) {
+	if(args == NULL) {
+		return 0;
+	} else {
+		uint32_t len;
+		swaddr_t addr;
+		int i;
+		sscanf(args, "%d %x", &len, &addr);
+		for(i = 0; i < len; i ++) {
+			if(i % 4 == 0) {
+				printf("  %x:\t", addr);
+			}
+
+			uint32_t memory = swaddr_read(addr ++, 1);
+
+			if(memory < 16) printf("0");
+			printf("%x", memory);
+
+			if(i % 4 == 3) printf("\n");
+			else printf(" ");
+		}
+		if(i % 4 != 0) printf("\n");
+	}
+	
+	return 0;
+}
+
 static int cmd_help(char *args);
 
 static struct {
@@ -77,6 +104,7 @@ static struct {
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Step one instruction exactly", cmd_si },
+	{ "x", "Scan memory", cmd_x },
 	{ "info", "Print information of registers or watchpoints", cmd_info },
 
 	/* TODO: Add more commands */
